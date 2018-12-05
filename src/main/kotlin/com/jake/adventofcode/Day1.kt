@@ -1,31 +1,27 @@
 package com.jake.adventofcode
 
-import java.lang.IllegalArgumentException
+import java.io.File
+
+val frequencies = File("input/day1").useLines { it.toList() }.map { toInt(it) }
 
 fun main() {
-    val day1 = Day1()
-    println(day1.part1())
-    println(day1.part2())
+    println(part1())
+    println(part2())
 }
 
-class Day1 {
-    private var frequencies: List<Int> = Day1::class.java.getResource("day1").readText().split("\n").map { toInt(it) }
+fun toInt(s: String) = s.replace("+", "").toInt()
 
-    fun part1() = frequencies.sum()
+private fun part1() = frequencies.sum()
 
-    private fun toInt(s: String) = s.replace("+", "").toInt()
+private fun part2() = cycle(frequencies)
+                .scanl { a, b -> a + b }
+                .firstDuplicate()
 
-    fun part2() =
-        cycle(frequencies)
-            .scanl { a, b -> a + b }
-            .firstDuplicate()
-
-    private fun cycle(list: List<Int>): Sequence<Int> {
-        return sequence {
-            while (true) {
-                for (frequency in list) {
-                    yield(frequency)
-                }
+fun cycle(list: List<Int>): Sequence<Int> {
+    return sequence {
+        while (true) {
+            for (frequency in list) {
+                yield(frequency)
             }
         }
     }
