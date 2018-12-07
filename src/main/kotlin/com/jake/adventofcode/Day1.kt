@@ -2,14 +2,12 @@ package com.jake.adventofcode
 
 import java.io.File
 
-val frequencies = File("input/day1").useLines { it.toList() }.map { toInt(it) }
+val frequencies = File("input/day1").useLines { it.toList() }.map { it.toInt() }
 
 fun main() {
     println(part1())
     println(part2())
 }
-
-fun toInt(s: String) = s.replace("+", "").toInt()
 
 private fun part1() = frequencies.sum()
 
